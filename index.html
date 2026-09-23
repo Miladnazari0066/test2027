@@ -173,8 +173,8 @@ button{cursor:pointer}
 .w-3{grid-column:span 3}.w-4{grid-column:span 4}.w-5{grid-column:span 5}
 .w-6{grid-column:span 6}.w-7{grid-column:span 7}.w-8{grid-column:span 8}
 .w-12{grid-column:span 12}
-@media (max-width:1200px){.w-3,.w-4,.w-5{grid-column:span 6}.w-7,.w-8{grid-column:span 12}}
-@media (max-width:760px){.bento>*{grid-column:span 12!important}}
+@media (max-width:1100px){.w-3{grid-column:span 6}.w-4,.w-5,.w-6,.w-7,.w-8{grid-column:span 12}}
+@media (max-width:640px){.bento>*{grid-column:span 12!important}}
 .widget{background:var(--g2);border:1px solid var(--gb);border-radius:22px;padding:18px;box-shadow:var(--ghl),var(--gs)}
 .w-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .w-title{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:9px}
@@ -574,7 +574,6 @@ button{cursor:pointer}
 .install-toast button{height:36px;padding:0 14px;border-radius:100px;font-size:12.5px;font-weight:700;background:var(--grad);color:#fff;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .install-toast button svg{width:14px;height:14px}
 .install-toast .x{background:transparent;color:var(--muted);width:30px;height:30px;padding:0;justify-content:center;border-radius:50%}
-/* ===== REPORTS ===== */
 .rep-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
 .rep-tab{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:100px;font-size:13px;font-weight:600;color:var(--text-2);background:var(--g1);border:1px solid var(--gb);cursor:pointer;transition:all .28s var(--ease);white-space:nowrap}
 .rep-tab:hover{background:var(--g2)}
@@ -595,7 +594,6 @@ button{cursor:pointer}
 .legend{display:flex;gap:14px;flex-wrap:wrap;padding:10px 18px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11.5px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend .wh-dot{width:8px;height:8px}
-/* ===== PDF PREVIEW MODAL ===== */
 .pdf-modal{position:fixed;inset:0;z-index:1300;display:flex;flex-direction:column;background:#e5e7eb;animation:fadeIn .25s var(--ease)}
 .pdf-toolbar{display:flex;align-items:center;gap:10px;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));background:var(--g3);backdrop-filter:blur(24px) saturate(1.9);-webkit-backdrop-filter:blur(24px) saturate(1.9);border-bottom:1px solid var(--border);flex-shrink:0;box-shadow:0 4px 20px -8px rgba(15,23,42,.2)}
 .pdf-toolbar .pdf-title{flex:1;text-align:center;font-weight:800;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 8px;min-width:0}
@@ -610,6 +608,405 @@ button{cursor:pointer}
   .pdf-toolbar .btn{height:34px;padding:0 10px;font-size:12px;gap:5px}
   .pdf-toolbar .btn .lbl{display:none}
   .pdf-toolbar .btn svg{width:15px;height:15px}
+}
+
+/* ============================================================
+   RESPONSIVE ENHANCEMENTS
+   ============================================================ */
+
+/* Very large desktop */
+@media (min-width:1400px){
+  .page{padding:30px 24px 60px}
+  .bento{gap:18px}
+  .hero{padding:32px}
+  .hero h2{font-size:26px}
+  .hero p{font-size:14px}
+}
+
+/* Compact search & user buttons on smaller desktop (1101-1200px) */
+@media (max-width:1100px) and (min-width:901px){
+  .search-btn{min-width:160px;padding:0 12px}
+  .user-btn{padding:3px;height:40px}
+  .user-btn .who-text,.user-btn > svg{display:none}
+  .user-btn .avatar{width:34px;height:34px}
+  .nav-pill{padding:0 12px;gap:6px}
+  .nav-pill .kbd{display:none}
+}
+
+/* Hide keyboard hints on smaller desktop (<1300px) */
+@media (max-width:1300px) and (min-width:1101px){
+  .nav-pill .kbd{display:none}
+}
+
+/* Tablet landscape / large phone landscape (901-1100px) */
+@media (max-width:1100px) and (min-width:641px){
+  .bento{gap:14px}
+  .page{padding:22px 18px 60px}
+  .hero{padding:24px;border-radius:24px}
+  .hero h2{font-size:22px}
+  .hero p{font-size:13px}
+  .hero-stats{gap:22px;margin-top:18px}
+  .hero-stat .v{font-size:20px}
+  .hero-quick{margin-top:18px}
+  .widget{padding:16px;border-radius:20px}
+  .stat{padding:16px;border-radius:20px}
+  .stat-value{font-size:28px}
+  .qa{gap:8px}
+  .qa-btn{padding:14px;border-radius:16px}
+  .qa-btn .ic{width:34px;height:34px}
+  .qa-btn .ic svg{width:16px;height:16px}
+  .table-toolbar{padding:12px 16px}
+  .dt{min-width:720px}
+  .dt thead th,.dt tbody td{padding:12px 16px}
+  .rep-tab{height:38px;padding:0 14px;font-size:12.5px}
+  .tl{padding-right:28px}
+  .tl::before{right:11px}
+  .tl-node{right:-28px;width:24px;height:24px}
+  .modal{padding:24px}
+  .drawer{max-width:480px}
+}
+
+/* Phone & small tablet portrait (481-640px) */
+@media (max-width:640px){
+  .page{padding:16px 12px 110px}
+  .page-head{margin-bottom:16px;gap:10px}
+  .page-head h1{font-size:22px}
+  .page-head .sub{font-size:12px}
+  .page-actions{width:100%}
+  .page-actions .btn{flex:1}
+
+  .hero{padding:18px;border-radius:20px}
+  .hero h2{font-size:18px;line-height:1.35}
+  .hero p{font-size:12.5px;line-height:1.8}
+  .hero-stats{gap:18px;margin-top:14px}
+  .hero-stat .k{font-size:10.5px}
+  .hero-stat .v{font-size:17px}
+  .hero-quick{gap:6px;margin-top:16px}
+  .hero-quick button{height:36px;padding:0 12px;font-size:11.5px;gap:5px}
+  .hero-quick button svg{width:13px;height:13px}
+
+  .widget{padding:14px;border-radius:18px}
+  .w-head{margin-bottom:12px;gap:8px}
+  .w-title{font-size:12.5px;gap:7px}
+  .w-title .ic{width:26px;height:26px;border-radius:8px}
+  .w-title .ic svg{width:13px;height:13px}
+  .w-sub{font-size:11px}
+
+  .stat{padding:14px;border-radius:16px}
+  .stat-head{margin-bottom:10px}
+  .stat-ic{width:32px;height:32px}
+  .stat-ic svg{width:15px;height:15px}
+  .stat-title{font-size:11.5px;gap:7px}
+  .stat-value{font-size:24px}
+
+  .qa{gap:8px}
+  .qa-btn{padding:12px;gap:6px;border-radius:14px}
+  .qa-btn .ic{width:30px;height:30px}
+  .qa-btn .ic svg{width:14px;height:14px}
+  .qa-btn b{font-size:11.5px}
+  .qa-btn span{font-size:10.5px}
+
+  .pipe{gap:6px}
+  .pipe-step{padding:10px 12px;gap:10px;border-radius:14px}
+  .pipe-num{width:26px;height:26px;font-size:11px}
+  .pipe-step .lbl{font-size:11.5px}
+  .pipe-step .lbl small{font-size:10px}
+  .pipe-count{font-size:12px;padding:3px 9px}
+
+  .feed-item{padding:10px;gap:10px;border-radius:12px}
+  .feed-av{width:34px;height:34px;font-size:11px}
+  .feed-title{font-size:12.5px}
+  .feed-meta{font-size:11px}
+
+  .team-row{padding:8px;gap:10px}
+  .team-info b{font-size:12px}
+  .team-info span{font-size:10.5px}
+  .role-badge{font-size:10px;padding:3px 8px}
+
+  .badge{font-size:11px;padding:4px 9px}
+  .t-item{padding:12px 14px;border-radius:16px}
+  .t-row1{gap:8px;margin-bottom:6px}
+  .t-row2{gap:10px;font-size:12px}
+  .t-code{font-size:11px}
+  .t-qty{font-size:11.5px;padding:2px 9px}
+
+  .btn{padding:0 14px;font-size:12.5px;height:38px}
+  .btn.sm{height:34px;padding:0 12px;font-size:12px}
+  .btn.xs{height:28px;padding:0 10px;font-size:11px}
+  .btn.block{height:42px}
+
+  .icon-btn{width:38px;height:38px}
+
+  .form-grid{gap:12px}
+  .field label{font-size:12px}
+  .field input,.field select,.field textarea{height:42px;font-size:13px;padding:0 14px}
+  .field textarea{min-height:80px;padding:10px 14px}
+  .field select{padding-left:38px;background-position:left 14px center}
+
+  .table-card{border-radius:18px}
+  .table-toolbar{padding:12px 12px;gap:8px}
+  .search-input{min-width:100%;max-width:100%}
+  .dt{min-width:560px;font-size:12.5px}
+  .dt thead th{padding:10px 12px;font-size:10.5px}
+  .dt tbody td{padding:10px 12px}
+  .row-num{width:26px;height:26px;font-size:11px}
+
+  .rep-tabs{gap:4px;margin-bottom:12px}
+  .rep-tab{height:36px;padding:0 12px;font-size:12px;gap:6px}
+  .rep-tab svg{width:14px;height:14px}
+  .rep-filters{padding:12px 12px;gap:10px;flex-direction:column;align-items:stretch}
+  .rep-filters .field{flex-direction:column;align-items:stretch;gap:4px;min-width:100%}
+  .rep-filters select,.rep-filters input{min-width:0;width:100%}
+  .rep-actions{margin-right:0;width:100%;flex-wrap:wrap}
+  .rep-actions .btn{flex:1;min-width:70px}
+  .rep-stat-grid{padding:12px;gap:8px;grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .rep-stat{padding:12px;border-radius:14px}
+  .rep-stat .k{font-size:10.5px}
+  .rep-stat .v{font-size:18px}
+  .legend{padding:8px 12px;font-size:11px;gap:10px}
+
+  .modal{padding:18px;border-radius:22px;max-width:calc(100% - 20px)}
+  .modal h3{font-size:15.5px}
+  .modal .desc{font-size:12px}
+  .modal-actions{flex-direction:column-reverse;gap:8px}
+  .modal-actions .btn{width:100%}
+
+  .drawer{max-width:100%}
+  .drawer-head{padding:18px}
+  .drawer-head h3{font-size:14px}
+  .drawer-body{padding:18px}
+  .drawer-foot{padding:14px 18px;gap:8px}
+  .drawer-foot .btn{flex:1}
+
+  .notif-head{padding:16px 18px 12px}
+  .notif-title-icon{width:40px;height:40px;border-radius:12px}
+  .notif-tabs{padding:10px 12px}
+  .notif-tab{height:36px;font-size:12px;padding:0 10px}
+  .notif-body{padding:12px}
+  .notif-card{padding:12px 14px;border-radius:16px}
+  .notif-card-title{font-size:13px}
+  .notif-card-actions{gap:6px}
+  .notif-card-actions .btn{flex:1;justify-content:center}
+
+  .cmd-bd{padding:60px 12px 12px}
+  .cmd input{height:52px;font-size:14px;padding:0 18px}
+  .cmd-item{padding:10px 12px;font-size:13px;border-radius:14px}
+  .cmd-item .kbd{display:none}
+
+  .sheet{padding:10px 12px calc(20px + env(safe-area-inset-bottom, 0px))}
+  .sheet-user{padding:14px;gap:12px;border-radius:18px}
+  .sheet-user .avatar{width:48px;height:48px;font-size:16px}
+  .sheet-user .info b{font-size:15.5px}
+  .sheet-item{padding:10px;gap:12px;font-size:13.5px;border-radius:14px}
+  .sheet-ic{width:36px;height:36px}
+  .sheet-ic svg{width:16px;height:16px}
+
+  .kit-box{padding:12px;border-radius:16px}
+  .kit-head{gap:8px;margin-bottom:12px}
+  .kit-head-title{font-size:12.5px;gap:8px}
+  .kit-head-title .kit-ic{width:28px;height:28px}
+  .kit-head-title .kit-ic svg{width:14px;height:14px}
+  .kit-head-title small{font-size:10.5px}
+  .kit-row{grid-template-columns:1fr 64px 32px;gap:6px}
+  .kit-row input{height:38px;padding:0 10px;font-size:12.5px}
+  .kit-del{width:32px;height:32px}
+  .kit-del svg{width:13px;height:13px}
+  .kit-hint{font-size:11px;line-height:1.7}
+  .kit-total{font-size:11.5px;padding:8px 12px}
+
+  .dl-item{padding:11px 13px}
+  .dl-item .k{font-size:11px}
+  .dl-item .v{font-size:12.5px}
+
+  .tl{padding-right:26px}
+  .tl::before{right:10px}
+  .tl-node{right:-26px;width:22px;height:22px}
+  .tl-node svg{width:10px;height:10px}
+  .tl-title{font-size:12.5px}
+  .tl-meta{font-size:11.5px;line-height:1.7}
+  .tl li{padding-bottom:20px}
+
+  .bottom-tabs{bottom:calc(10px + env(safe-area-inset-bottom, 0px));padding:4px}
+  .tab-btn{min-width:52px;padding:6px 6px;gap:2px}
+  .tab-btn svg{width:20px;height:20px}
+  .tab-btn span{font-size:9px}
+  .tab-btn .tab-badge{top:1px;transform:translateX(10px);min-width:16px;height:16px;font-size:9px}
+
+  .splash-logo{width:100px;height:100px}
+  .splash-logo svg{width:48px;height:48px}
+  .splash-wm{font-size:34px;letter-spacing:-1.6px}
+  .splash-tag{font-size:10.5px;letter-spacing:2.5px}
+  .splash-ring{width:100px;height:100px}
+  .splash-dots span{width:5px;height:5px}
+
+  .wiz-steps{margin-bottom:20px}
+  .wiz-step .num{width:36px;height:36px;font-size:12px}
+  .wiz-step .lbl{font-size:10.5px}
+  .wiz-line{top:18px}
+
+  .search-input input{height:38px;font-size:12.5px}
+  .chip{height:32px;padding:0 12px;font-size:12px}
+}
+
+/* Small phone (≤480px) */
+@media (max-width:480px){
+  .page{padding:14px 10px 110px}
+  .page-head h1{font-size:20px}
+  .page-head .sub{font-size:11.5px}
+  .page-actions{gap:6px}
+
+  .hero{padding:16px;border-radius:18px}
+  .hero h2{font-size:17px}
+  .hero p{font-size:12px}
+  .hero-stats{gap:14px}
+  .hero-stat .v{font-size:16px}
+  .hero-quick{gap:5px;margin-top:14px}
+  .hero-quick button{height:34px;padding:0 11px;font-size:11px}
+
+  .widget{padding:12px;border-radius:16px}
+  .w-title{font-size:12px}
+  .w-title .ic{width:24px;height:24px}
+  .w-title .ic svg{width:12px;height:12px}
+
+  .stat{padding:12px;border-radius:14px}
+  .stat-value{font-size:22px}
+  .stat-ic{width:30px;height:30px}
+  .stat-ic svg{width:14px;height:14px}
+
+  .qa-btn{padding:10px;gap:5px;border-radius:12px}
+  .qa-btn .ic{width:28px;height:28px}
+  .qa-btn .ic svg{width:13px;height:13px}
+  .qa-btn b{font-size:11px}
+  .qa-btn span{font-size:10px}
+
+  .btn{padding:0 12px;font-size:12px;height:36px;gap:6px}
+  .btn svg{width:14px;height:14px}
+  .btn.sm{height:32px;padding:0 10px;font-size:11.5px}
+  .btn.xs{height:26px;padding:0 9px;font-size:10.5px}
+  .btn.block{height:40px}
+
+  .icon-btn{width:36px;height:36px}
+  .icon-btn svg{width:16px;height:16px}
+  .avatar{width:32px;height:32px;font-size:11px}
+
+  .navbar{height:54px}
+  .nav-wrap{padding:8px 10px 0}
+  .brand-logo{width:38px;height:38px}
+  .brand-logo svg{width:20px;height:20px}
+  .brand-text .wm{font-size:15px}
+  .brand-text small{font-size:9px}
+
+  .dt{min-width:520px}
+  .dt thead th,.dt tbody td{padding:8px 10px}
+  .row-num{width:24px;height:24px;font-size:10.5px}
+  .code-chip,.unit-chip,.kit-chip{font-size:10px;padding:2px 6px}
+  .qty-hl{font-size:12px;padding:3px 8px;min-width:38px}
+
+  .rep-stat-grid{grid-template-columns:1fr 1fr;gap:8px;padding:10px}
+  .rep-stat{padding:10px}
+  .rep-stat .v{font-size:16px}
+  .rep-stat .k{font-size:10px}
+  .rep-tab{height:34px;padding:0 11px;font-size:11.5px}
+
+  .bottom-tabs{padding:3px;gap:0;bottom:calc(8px + env(safe-area-inset-bottom, 0px))}
+  .tab-btn{min-width:46px;padding:5px 4px}
+  .tab-btn svg{width:18px;height:18px}
+  .tab-btn span{font-size:8.5px}
+
+  .modal{padding:16px;border-radius:20px;max-height:90vh}
+  .modal h3{font-size:15px}
+  .drawer-head{padding:16px}
+  .drawer-body{padding:16px}
+  .drawer-foot{padding:12px 16px}
+  .notif-head{padding:14px 16px 10px}
+  .notif-body{padding:10px}
+  .notif-tabs{padding:8px 10px;gap:2px}
+  .notif-tab{font-size:11.5px;padding:0 8px;gap:5px}
+
+  .sheet-user .avatar{width:44px;height:44px;font-size:14px}
+  .sheet-user .info b{font-size:14.5px}
+  .sheet-item{padding:9px 10px;font-size:13px}
+  .sheet-ic{width:32px;height:32px}
+  .sheet-ic svg{width:14px;height:14px}
+}
+
+/* Tiny phone (≤380px) */
+@media (max-width:380px){
+  .page{padding:12px 8px 110px}
+  .page-head h1{font-size:18px}
+
+  .hero{padding:14px}
+  .hero h2{font-size:16px}
+  .hero-quick{flex-direction:column;width:100%}
+  .hero-quick button{width:100%;justify-content:center}
+
+  .qa{grid-template-columns:1fr}
+  .qa-btn{flex-direction:row;align-items:center;padding:12px}
+  .qa-btn .ic{width:32px;height:32px}
+  .qa-btn b{font-size:12px}
+  .qa-btn span{display:none}
+
+  .wiz-step .num{width:32px;height:32px;font-size:11px}
+  .wiz-step .lbl{font-size:10px}
+  .wiz-line{top:16px}
+
+  .rep-stat-grid{grid-template-columns:1fr}
+
+  .navbar{height:50px;padding:0 6px 0 10px}
+  .nav-wrap{padding:6px 8px 0}
+  .brand-logo{width:34px;height:34px}
+  .brand-logo svg{width:18px;height:18px}
+  .brand-text .wm{font-size:14px}
+  .brand-text small{display:none}
+
+  .icon-btn{width:34px;height:34px}
+  .icon-btn svg{width:15px;height:15px}
+  .avatar{width:30px;height:30px;font-size:10px}
+
+  .tab-btn{min-width:42px;padding:4px 3px}
+  .tab-btn svg{width:17px;height:17px}
+  .tab-btn span{display:none}
+  .tab-btn .tab-badge{transform:translateX(6px)}
+}
+
+/* Landscape phones with short screen */
+@media (max-height:480px) and (orientation:landscape) and (max-width:900px){
+  .bottom-tabs{display:none}
+  .page{padding-bottom:30px}
+  .nav-wrap{padding:6px 10px 0}
+  .navbar{height:50px}
+  .hero{padding:16px}
+  .hero-quick button{height:34px}
+}
+
+/* Ultra-wide */
+@media (min-width:1800px){
+  .page{max-width:1720px}
+  .nav-wrap{padding:14px 24px 0}
+  .navbar{padding:0 16px 0 24px}
+}
+
+/* Touch device improvements */
+@media (hover:none){
+  .btn:hover{transform:none}
+  .t-item:hover{transform:none}
+  .qa-btn:hover{transform:none}
+  .feed-item:hover{background:transparent}
+  .dt tbody tr:hover{background:transparent}
+  .btn:active{transform:scale(.96)}
+  .icon-btn:active{transform:scale(.92)}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .splash{display:none!important}
+}
+
+/* Print */
+@media print{
+  .nav-wrap,.bottom-tabs,.install-toast,.pdf-toolbar{display:none!important}
+  body{background:#fff}
 }
 </style>
 </head>
@@ -2372,17 +2769,14 @@ function exportExcel(filename, title, headers, rows) {
   html += '</tbody></table></body></html>';
   downloadBlob(new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' }), filename + '.xls');
 }
-
-/* PDF content builder */
 function buildPdfHtml(title, subtitle, headers, rows, autoPrint) {
   var html = '<!DOCTYPE html><html dir="rtl" lang="fa"><head><meta charset="UTF-8"><title>' + title + '</title>';
   html += '<style>body{font-family:Tahoma,"Vazirmatn",sans-serif;padding:20px;color:#1e293b;margin:0}h1{font-size:20px;margin:0 0 6px;color:#007AFF}h2{font-size:12px;font-weight:500;color:#64748b;margin:0 0 18px}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #cbd5e1;padding:6px 8px;text-align:right;vertical-align:middle}th{background:#eef2f9;font-weight:bold;color:#334155}tr:nth-child(even) td{background:#f8fafc}.empty{padding:40px;text-align:center;color:#94a3b8}@media print{@page{size:A4 landscape;margin:10mm}body{padding:0}h1{font-size:16px}}</style>';
   html += '</head><body>';
   html += '<h1>' + esc(title) + '</h1>';
   html += '<h2>' + esc(subtitle || '') + ' — تاریخ: ' + faDate(new Date().toISOString()) + '</h2>';
-  if (!rows || !rows.length) {
-    html += '<div class="empty">موردی برای نمایش نیست</div>';
-  } else {
+  if (!rows || !rows.length) html += '<div class="empty">موردی برای نمایش نیست</div>';
+  else {
     html += '<table><thead><tr>' + headers.map(function(h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead><tbody>';
     rows.forEach(function(r) { html += '<tr>' + r.map(function(c) { return '<td>' + esc(c == null ? '' : String(c)) + '</td>'; }).join('') + '</tr>'; });
     html += '</tbody></table>';
@@ -2391,16 +2785,12 @@ function buildPdfHtml(title, subtitle, headers, rows, autoPrint) {
   html += '</body></html>';
   return html;
 }
-
-/* PDF preview modal with close/print/new-tab */
 function exportPDF(title, subtitle, headers, rows) {
   try {
     var old = document.querySelector('.pdf-modal');
     if (old) old.remove();
-
     var inlineHtml = buildPdfHtml(title, subtitle, headers, rows, false);
     var printableHtml = buildPdfHtml(title, subtitle, headers, rows, true);
-
     var m = document.createElement('div');
     m.className = 'pdf-modal';
     m.innerHTML =
@@ -2411,63 +2801,41 @@ function exportPDF(title, subtitle, headers, rows) {
         '<button type="button" class="btn primary sm" id="pdf-print" title="چاپ">' + IC.print + ' <span class="lbl">چاپ</span></button>' +
       '</div>' +
       '<div class="pdf-frame-wrap"><iframe id="pdf-frame" sandbox="allow-same-origin allow-modals allow-popups allow-scripts"></iframe></div>';
-
     document.body.appendChild(m);
-
     var frame = m.querySelector('#pdf-frame');
-
-    try {
-      frame.srcdoc = inlineHtml;
-    } catch(e) {
-      try { frame.contentDocument.open(); frame.contentDocument.write(inlineHtml); frame.contentDocument.close(); } catch(e2) {}
-    }
-
+    try { frame.srcdoc = inlineHtml; }
+    catch(e) { try { frame.contentDocument.open(); frame.contentDocument.write(inlineHtml); frame.contentDocument.close(); } catch(e2) {} }
     function closePdf() { try { m.remove(); } catch(e) {} }
-
     m.querySelector('#pdf-close').addEventListener('click', closePdf);
-
     m.querySelector('#pdf-print').addEventListener('click', function() {
       try {
-        var win = frame.contentWindow;
-        if (!win) throw new Error('iframe در دسترس نیست');
-        win.focus();
-        win.print();
+        var win = frame.contentWindow; if (!win) throw new Error('iframe در دسترس نیست');
+        win.focus(); win.print();
       } catch(e) {
         try {
           var w = window.open('', '_blank');
           if (!w) { celebrate('پاپ‌آپ مسدود است', 'از «تب جدید» استفاده کنید', 'warn', 2200); return; }
           w.document.open(); w.document.write(printableHtml); w.document.close();
-        } catch(err) {
-          celebrate('خطا در چاپ', err.message || 'از «تب جدید» استفاده کنید', 'error', 2200);
-        }
+        } catch(err) { celebrate('خطا در چاپ', err.message || 'از «تب جدید» استفاده کنید', 'error', 2200); }
       }
     });
-
     m.querySelector('#pdf-newwin').addEventListener('click', function() {
       try {
         var w = window.open('', '_blank');
         if (!w) { celebrate('پاپ‌آپ مسدود شده', 'لطفاً اجازه پاپ‌آپ بدهید', 'warn', 2200); return; }
         w.document.open(); w.document.write(printableHtml); w.document.close();
-      } catch(e) {
-        celebrate('خطا', e.message || '', 'error', 2000);
-      }
+      } catch(e) { celebrate('خطا', e.message || '', 'error', 2000); }
     });
-
     attachRippleAll(m);
-  } catch(e) {
-    celebrate('خطا در تولید PDF', e.message || '', 'error', 2200);
-  }
+  } catch(e) { celebrate('خطا در تولید PDF', e.message || '', 'error', 2200); }
 }
 
-/* ===== REPORTS PAGE ===== */
 function pageReports(page) {
   var tab = 'inventory';
   var filterWh = '';
-
   function render() {
     var db = loadDB();
     var whs = db.warehouses.filter(function(w) { return w.type !== 'customer'; });
-
     page.innerHTML = '<div class="page-head"><div><h1>گزارش‌ها و خروجی</h1><div class="sub">گزارش‌های حرفه‌ای با قابلیت خروجی Excel، CSV و PDF</div></div></div>' +
       '<div class="rep-tabs">' +
         '<button class="rep-tab ' + (tab === 'inventory' ? 'active' : '') + '" data-t="inventory">' + IC.layers + ' موجودی انبارها</button>' +
@@ -2478,9 +2846,7 @@ function pageReports(page) {
         '<button class="rep-tab ' + (tab === 'adjustments' ? 'active' : '') + '" data-t="adjustments">' + IC.refresh + ' تعدیلات موجودی</button>' +
       '</div>' +
       '<div class="table-card"><div id="rep-body"></div></div>';
-
     $$('.rep-tab').forEach(function(b) { b.addEventListener('click', function() { tab = b.dataset.t; render(); }); });
-
     var body = $('#rep-body');
     if (tab === 'inventory') body.innerHTML = renderInventoryReport(db, whs, filterWh, true);
     else if (tab === 'showrooms') body.innerHTML = renderInventoryReport(db, whs.filter(function(w) { return ['showroom_khalij', 'showroom_alus'].indexOf(w.type) >= 0; }), '', false);
@@ -2488,10 +2854,8 @@ function pageReports(page) {
     else if (tab === 'paint') body.innerHTML = renderInventoryReport(db, whs.filter(function(w) { return ['paint_in', 'paint_out'].indexOf(w.type) >= 0; }), '', false);
     else if (tab === 'transfers') body.innerHTML = renderTransfersReport(db);
     else if (tab === 'adjustments') body.innerHTML = renderAdjustmentsReport(db);
-
     bindReportActions(db, whs);
   }
-
   function inventoryRows(db, warehouses) {
     var whIds = warehouses.map(function(w) { return w.id; });
     var rows = db.stocks.filter(function(s) {
@@ -2509,7 +2873,6 @@ function pageReports(page) {
     });
     return rows;
   }
-
   function renderInventoryReport(db, warehouses, whFilter, showFilter) {
     var effective = whFilter ? warehouses.filter(function(w) { return w.id === whFilter; }) : warehouses;
     var rows = inventoryRows(db, effective);
@@ -2519,15 +2882,9 @@ function pageReports(page) {
       statsHTML += '<div class="rep-stat"><div class="k"><span class="wh-dot" style="background:' + (WH_COLOR[w.type] || '#94a3b8') + '"></span>' + esc(w.name) + '</div><div class="v">' + total.toLocaleString('fa-IR') + ' <small>عدد</small></div></div>';
     });
     statsHTML += '</div>';
-
     var filtersHTML = '<div class="rep-filters">' +
       (showFilter ? '<div class="field"><label>انبار:</label><select id="rep-wh"><option value="">همه</option>' + warehouses.map(function(w) { return '<option value="' + w.id + '" ' + (whFilter === w.id ? 'selected' : '') + '>' + esc(w.name) + '</option>'; }).join('') + '</select></div>' : '') +
-      '<div class="rep-actions">' +
-        '<button class="btn success xs" data-exp="excel">' + IC.download + ' Excel</button>' +
-        '<button class="btn ghost xs" data-exp="csv">' + IC.file + ' CSV</button>' +
-        '<button class="btn danger xs" data-exp="pdf">' + IC.print + ' PDF</button>' +
-      '</div></div>';
-
+      '<div class="rep-actions"><button class="btn success xs" data-exp="excel">' + IC.download + ' Excel</button><button class="btn ghost xs" data-exp="csv">' + IC.file + ' CSV</button><button class="btn danger xs" data-exp="pdf">' + IC.print + ' PDF</button></div></div>';
     var tableHTML = '<div class="table-scroll">';
     if (!rows.length) tableHTML += '<div class="table-empty">' + IC.inbox + '<b>موردی برای نمایش نیست</b></div>';
     else {
@@ -2541,10 +2898,8 @@ function pageReports(page) {
       tableHTML += '</tbody></table>';
     }
     tableHTML += '</div>';
-
     return statsHTML + filtersHTML + tableHTML;
   }
-
   function renderTransfersReport(db) {
     var list = db.transfers.slice().sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
     var rows = list.map(function(t) {
@@ -2553,17 +2908,11 @@ function pageReports(page) {
       var st = stOf(t);
       return { t: t, p: p, src: src, dst: dst, st: st };
     });
-
     var filtersHTML = '<div class="rep-filters">' +
       '<div class="field"><label>از تاریخ:</label><input type="date" id="rep-from" /></div>' +
       '<div class="field"><label>تا تاریخ:</label><input type="date" id="rep-to" /></div>' +
       '<div class="field"><label>وضعیت:</label><select id="rep-status"><option value="">همه</option><option value="pending_warehouse">در انتظار انبار</option><option value="pending_accountant">در انتظار حسابدار</option><option value="pending_manager">در انتظار مدیر</option><option value="approved">تأییدشده</option><option value="rejected">ردشده</option></select></div>' +
-      '<div class="rep-actions">' +
-        '<button class="btn success xs" data-exp="excel">' + IC.download + ' Excel</button>' +
-        '<button class="btn ghost xs" data-exp="csv">' + IC.file + ' CSV</button>' +
-        '<button class="btn danger xs" data-exp="pdf">' + IC.print + ' PDF</button>' +
-      '</div></div>';
-
+      '<div class="rep-actions"><button class="btn success xs" data-exp="excel">' + IC.download + ' Excel</button><button class="btn ghost xs" data-exp="csv">' + IC.file + ' CSV</button><button class="btn danger xs" data-exp="pdf">' + IC.print + ' PDF</button></div></div>';
     var tableHTML = '<div class="table-scroll">';
     if (!rows.length) tableHTML += '<div class="table-empty">' + IC.inbox + '<b>موردی یافت نشد</b></div>';
     else {
@@ -2571,23 +2920,13 @@ function pageReports(page) {
       rows.forEach(function(r) {
         var typeLabel = r.t.type === 'inbound' ? 'ورود' : (r.t.type === 'direct-customer' ? 'ارسال مستقیم' : 'انتقال');
         var srcLabel = r.t.type === 'inbound' ? ('تأمین‌کننده: ' + (r.t.supplierName || '')) : ((r.src && r.src.name) || '—');
-        tableHTML += '<tr><td><span class="t-code">' + esc(r.t.code) + '</span></td>' +
-          '<td class="date-cell">' + faDateShort(r.t.createdAt) + '</td>' +
-          '<td>' + typeLabel + '</td>' +
-          '<td>' + esc(srcLabel) + '</td>' +
-          '<td>' + esc((r.dst && r.dst.name) || '—') + '</td>' +
-          '<td>' + esc((r.p && r.p.name) || '—') + '</td>' +
-          '<td class="num">' + r.t.quantity + ' <span class="unit">' + esc((r.p && r.p.unit) || '') + '</span></td>' +
-          '<td><span class="badge ' + r.st.tone + '">' + r.st.label + '</span></td>' +
-          '<td class="muted small col-sm-hide">' + esc(r.t.createdByName || '—') + '</td></tr>';
+        tableHTML += '<tr><td><span class="t-code">' + esc(r.t.code) + '</span></td><td class="date-cell">' + faDateShort(r.t.createdAt) + '</td><td>' + typeLabel + '</td><td>' + esc(srcLabel) + '</td><td>' + esc((r.dst && r.dst.name) || '—') + '</td><td>' + esc((r.p && r.p.name) || '—') + '</td><td class="num">' + r.t.quantity + ' <span class="unit">' + esc((r.p && r.p.unit) || '') + '</span></td><td><span class="badge ' + r.st.tone + '">' + r.st.label + '</span></td><td class="muted small col-sm-hide">' + esc(r.t.createdByName || '—') + '</td></tr>';
       });
       tableHTML += '</tbody></table>';
     }
     tableHTML += '</div>';
-
     return filtersHTML + tableHTML;
   }
-
   function renderAdjustmentsReport(db) {
     var list = (db.adjustments || []).slice().sort(function(a, b) { return new Date(b.at) - new Date(a.at); });
     var tableHTML = '<div class="table-scroll">';
@@ -2595,30 +2934,21 @@ function pageReports(page) {
     else {
       tableHTML += '<table class="dt"><thead><tr><th>#</th><th>تاریخ</th><th>کاربر</th><th>نوع</th><th class="col-sm-hide">اقلام صفرشده</th><th>یادداشت</th><th></th></tr></thead><tbody>';
       list.forEach(function(a, i) {
-        tableHTML += '<tr><td><span class="row-num">' + (i + 1) + '</span></td>' +
-          '<td class="date-cell">' + faDate(a.at) + '</td>' +
-          '<td>' + esc(a.byName || '—') + '</td>' +
-          '<td>' + (a.type === 'period_close' ? 'بستن دوره' : esc(a.type)) + '</td>' +
-          '<td class="col-sm-hide">' + (a.itemsCount || 0).toLocaleString('fa-IR') + ' قلم</td>' +
-          '<td class="muted small">' + esc(a.note || '—') + '</td>' +
-          '<td class="actions-cell"><button class="btn ghost xs" data-adj="' + a.id + '">جزئیات</button></td></tr>';
+        tableHTML += '<tr><td><span class="row-num">' + (i + 1) + '</span></td><td class="date-cell">' + faDate(a.at) + '</td><td>' + esc(a.byName || '—') + '</td><td>' + (a.type === 'period_close' ? 'بستن دوره' : esc(a.type)) + '</td><td class="col-sm-hide">' + (a.itemsCount || 0).toLocaleString('fa-IR') + ' قلم</td><td class="muted small">' + esc(a.note || '—') + '</td><td class="actions-cell"><button class="btn ghost xs" data-adj="' + a.id + '">جزئیات</button></td></tr>';
       });
       tableHTML += '</tbody></table>';
     }
     tableHTML += '</div>';
     return tableHTML;
   }
-
   function bindReportActions(db, whs) {
     var whSel = $('#rep-wh');
     if (whSel) whSel.addEventListener('change', function(e) { filterWh = e.target.value; render(); });
-
     $$('[data-exp]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var kind = btn.dataset.exp;
         var dbf = loadDB();
         var title = '', headers = [], rows = [], filename = 'alus-report-' + ymd();
-
         if (tab === 'inventory' || tab === 'showrooms' || tab === 'sold' || tab === 'paint') {
           var whs2 = dbf.warehouses.filter(function(w) { return w.type !== 'customer'; });
           if (tab === 'showrooms') whs2 = whs2.filter(function(w) { return ['showroom_khalij', 'showroom_alus'].indexOf(w.type) >= 0; });
@@ -2648,13 +2978,11 @@ function pageReports(page) {
           rows = adj.map(function(a) { return [faDate(a.at), a.byName || '', a.type === 'period_close' ? 'بستن دوره' : a.type, a.itemsCount || 0, a.note || '']; });
           filename = 'alus-adjustments-' + ymd();
         }
-
         if (kind === 'excel') exportExcel(filename, title, headers, rows);
         else if (kind === 'csv') exportCSV(filename, headers, rows);
         else if (kind === 'pdf') exportPDF(title, 'Alus · پنل مدیریت', headers, rows);
       });
     });
-
     $$('[data-adj]').forEach(function(b) {
       b.addEventListener('click', function() {
         var id = b.dataset.adj;
@@ -2674,18 +3002,15 @@ function pageReports(page) {
       });
     });
   }
-
   render();
 }
 
-/* ===== SETTINGS PAGE (Admin) ===== */
 function pageSettings(page) {
   var db = loadDB();
   var totalStock = db.stocks.reduce(function(a, s) { return a + s.quantity; }, 0);
   var nonZero = db.stocks.filter(function(s) { return s.quantity > 0 || (s.reservedQty || 0) > 0; });
   var dbSize = 0;
   try { dbSize = new Blob([JSON.stringify(db)]).size; } catch(e) {}
-
   page.innerHTML = '<div class="page-head"><div><h1>تنظیمات پیشرفته</h1><div class="sub">مدیریت سیستمی — دسترسی محدود به راهبر</div></div></div>' +
     '<div class="bento">' +
       '<div class="widget w-6"><div class="w-head"><div><div class="w-title"><div class="ic info">' + IC.info + '</div>وضعیت سیستم</div></div></div>' +
@@ -2698,24 +3023,15 @@ function pageSettings(page) {
           '<div class="dl-item"><div class="k">حجم داده‌ها</div><div class="v">' + (dbSize / 1024).toFixed(1) + ' KB</div></div>' +
         '</div>' +
       '</div>' +
-
       '<div class="widget w-6"><div class="w-head"><div><div class="w-title danger"><div class="ic danger">' + IC.alert + '</div>صفر کردن موجودی</div><div class="w-sub">با حفظ کامل تاریخچه</div></div></div>' +
         '<p style="font-size:12.5px;color:var(--text-2);line-height:1.9;margin-bottom:14px">' +
-          'این عملیات موجودی فعلی <b>' + nonZero.length.toLocaleString('fa-IR') + ' ردیف انبار</b> را صفر می‌کند اما ' +
-          'اسناد جابه‌جایی و تاریخچه قبلی کاملاً حفظ می‌شود. یک snapshot از موجودی فعلی به‌عنوان «تعدیل دوره» ثبت می‌گردد.' +
+          'این عملیات موجودی فعلی <b>' + nonZero.length.toLocaleString('fa-IR') + ' ردیف انبار</b> را صفر می‌کند اما اسناد جابه‌جایی و تاریخچه قبلی کاملاً حفظ می‌شود. یک snapshot از موجودی فعلی به‌عنوان «تعدیل دوره» ثبت می‌گردد.' +
         '</p>' +
-        '<div style="padding:12px 14px;background:rgba(255,149,0,.1);border:1px solid rgba(255,149,0,.24);border-radius:14px;font-size:12px;color:#b45309;margin-bottom:14px">' +
-          IC.alert + ' توصیه می‌شود قبل از انجام، از صفحه گزارش‌ها خروجی Excel تهیه کنید.' +
-        '</div>' +
-        '<div class="row" style="justify-content:flex-end">' +
-          '<button class="btn danger" id="zero-btn">' + IC.refresh + ' صفر کردن موجودی همه انبارها</button>' +
-        '</div>' +
+        '<div style="padding:12px 14px;background:rgba(255,149,0,.1);border:1px solid rgba(255,149,0,.24);border-radius:14px;font-size:12px;color:#b45309;margin-bottom:14px">' + IC.alert + ' توصیه می‌شود قبل از انجام، از صفحه گزارش‌ها خروجی Excel تهیه کنید.</div>' +
+        '<div class="row" style="justify-content:flex-end"><button class="btn danger" id="zero-btn">' + IC.refresh + ' صفر کردن موجودی همه انبارها</button></div>' +
       '</div>' +
-
       '<div class="widget w-12"><div class="w-head"><div><div class="w-title"><div class="ic">' + IC.download + '</div>پشتیبان‌گیری داده‌ها</div></div></div>' +
-        '<p style="font-size:12.5px;color:var(--text-2);line-height:1.9;margin-bottom:14px">' +
-          'کل پایگاه داده (کاربران، کالاها، موجودی و اسناد) را به‌صورت فایل JSON دریافت کنید. برای بازیابی، فایل را در همین صفحه بارگذاری کنید.' +
-        '</p>' +
+        '<p style="font-size:12.5px;color:var(--text-2);line-height:1.9;margin-bottom:14px">' + 'کل پایگاه داده (کاربران، کالاها، موجودی و اسناد) را به‌صورت فایل JSON دریافت کنید. برای بازیابی، فایل را در همین صفحه بارگذاری کنید.' + '</p>' +
         '<div class="row" style="justify-content:flex-end;gap:8px">' +
           '<button class="btn ghost" id="imp-btn">' + IC.download + ' بازیابی از فایل</button>' +
           '<button class="btn success" id="exp-btn">' + IC.download + ' دانلود پشتیبان (JSON)</button>' +
@@ -2723,10 +3039,7 @@ function pageSettings(page) {
         '</div>' +
       '</div>' +
     '</div>';
-
-  var zb = $('#zero-btn');
-  if (zb) zb.addEventListener('click', openZeroOutModal);
-
+  var zb = $('#zero-btn'); if (zb) zb.addEventListener('click', openZeroOutModal);
   var eb = $('#exp-btn');
   if (eb) eb.addEventListener('click', function() {
     var fresh = loadDB();
@@ -2734,32 +3047,26 @@ function pageSettings(page) {
     downloadBlob(blob, 'alus-backup-' + ymd() + '-' + Date.now() + '.json');
     celebrate('پشتیبان آماده شد', 'فایل JSON دانلود شد', 'success', 1800);
   });
-
-  var ib = $('#imp-btn');
-  var ifile = $('#imp-file');
+  var ib = $('#imp-btn'); var ifile = $('#imp-file');
   if (ib && ifile) {
     ib.addEventListener('click', function() { ifile.click(); });
     ifile.addEventListener('change', function() {
-      var f = ifile.files && ifile.files[0];
-      if (!f) return;
+      var f = ifile.files && ifile.files[0]; if (!f) return;
       var rd = new FileReader();
       rd.onload = function() {
         try {
           var parsed = JSON.parse(rd.result);
           if (!parsed || !parsed.users || !parsed.warehouses) throw new Error('فایل نامعتبر است');
           openModal({
-            title: 'بازیابی از پشتیبان',
-            desc: 'کل داده‌های فعلی با محتوای فایل جایگزین می‌شود. این عمل قابل بازگشت نیست.',
+            title: 'بازیابی از پشتیبان', desc: 'کل داده‌های فعلی با محتوای فایل جایگزین می‌شود. این عمل قابل بازگشت نیست.',
             body: '<div style="padding:12px 14px;background:rgba(255,59,48,.1);border-radius:14px;font-size:12px;color:#b91c1c">' + IC.alert + ' پس از بازیابی، به‌صورت خودکار از حساب خارج می‌شوید.</div>',
             actions: [
               { label: 'انصراف', cls: 'ghost', onClick: function(c) { c.remove(); } },
               { label: IC.check + ' بازیابی', cls: 'danger', onClick: function(c) {
                 try {
-                  migrateDB(parsed);
-                  saveDB(parsed);
+                  migrateDB(parsed); saveDB(parsed);
                   try { localStorage.removeItem(K_SES); } catch(e) {}
-                  c.remove();
-                  celebrate('بازیابی موفق', 'لطفاً مجدداً وارد شوید', 'success', 2200);
+                  c.remove(); celebrate('بازیابی موفق', 'لطفاً مجدداً وارد شوید', 'success', 2200);
                   setTimeout(function() { App.user = null; render(); }, 700);
                 } catch(err) { c.remove(); celebrate('خطا', err.message || '', 'error', 2200); }
               } }
@@ -2771,7 +3078,6 @@ function pageSettings(page) {
       rd.readAsText(f);
     });
   }
-
   attachRippleAll();
 }
 
@@ -2779,10 +3085,8 @@ function openZeroOutModal() {
   var db = loadDB();
   var nonZero = db.stocks.filter(function(s) { return s.quantity > 0 || (s.reservedQty || 0) > 0; });
   var totalQ = nonZero.reduce(function(a, s) { return a + s.quantity; }, 0);
-
   openModal({
-    title: 'تأیید صفر کردن موجودی',
-    desc: 'این عملیات با ثبت snapshot تاریخی انجام می‌شود.',
+    title: 'تأیید صفر کردن موجودی', desc: 'این عملیات با ثبت snapshot تاریخی انجام می‌شود.',
     body:
       '<div class="field"><label>یادداشت (اختیاری)</label><input id="zo-note" placeholder="مثلاً: بستن سال ۱۴۰۳" /></div>' +
       '<div style="margin-top:14px;padding:14px;background:var(--g1);border-radius:16px;font-size:12.5px;line-height:1.9">' +
@@ -2790,9 +3094,7 @@ function openZeroOutModal() {
         '<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>جمع موجودی فعلی:</span><b>' + totalQ.toLocaleString('fa-IR') + ' عدد</b></div>' +
         '<div style="display:flex;justify-content:space-between"><span>اسناد انتقال که حفظ می‌شوند:</span><b>' + db.transfers.length.toLocaleString('fa-IR') + ' سند</b></div>' +
       '</div>' +
-      '<div style="margin-top:12px;padding:12px 14px;background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.24);border-radius:14px;font-size:12px;color:#047857">' +
-        IC.check + ' تاریخچه کامل حفظ می‌شود. عملیات فقط مقادیر جاری را صفر می‌کند.' +
-      '</div>',
+      '<div style="margin-top:12px;padding:12px 14px;background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.24);border-radius:14px;font-size:12px;color:#047857">' + IC.check + ' تاریخچه کامل حفظ می‌شود. عملیات فقط مقادیر جاری را صفر می‌کند.</div>',
     actions: [
       { label: 'انصراف', cls: 'ghost', onClick: function(c) { c.remove(); } },
       { label: IC.refresh + ' تأیید و صفر کردن', cls: 'danger', onClick: function(c) {
@@ -2801,20 +3103,10 @@ function openZeroOutModal() {
         setTimeout(function() {
           try {
             var fresh = loadDB();
-            var snap = fresh.stocks.filter(function(s) { return s.quantity > 0 || (s.reservedQty || 0) > 0; })
-              .map(function(s) { return { productId: s.productId, warehouseId: s.warehouseId, quantity: s.quantity, reservedQty: s.reservedQty || 0 }; });
+            var snap = fresh.stocks.filter(function(s) { return s.quantity > 0 || (s.reservedQty || 0) > 0; }).map(function(s) { return { productId: s.productId, warehouseId: s.warehouseId, quantity: s.quantity, reservedQty: s.reservedQty || 0 }; });
             if (!snap.length) { c.remove(); celebrate('موجودی صفر است', 'چیزی برای صفر کردن نیست', 'info', 1800); return; }
             fresh.adjustments = fresh.adjustments || [];
-            fresh.adjustments.push({
-              id: uid(),
-              at: new Date().toISOString(),
-              by: App.user.id,
-              byName: App.user.name,
-              type: 'period_close',
-              note: note,
-              itemsCount: snap.length,
-              snapshot: snap
-            });
+            fresh.adjustments.push({ id: uid(), at: new Date().toISOString(), by: App.user.id, byName: App.user.name, type: 'period_close', note: note, itemsCount: snap.length, snapshot: snap });
             fresh.stocks.forEach(function(s) { s.quantity = 0; s.reservedQty = 0; s.updatedAt = new Date().toISOString(); });
             saveDB(fresh);
             c.remove();
