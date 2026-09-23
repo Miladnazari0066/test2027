@@ -595,6 +595,22 @@ button{cursor:pointer}
 .legend{display:flex;gap:14px;flex-wrap:wrap;padding:10px 18px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11.5px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend .wh-dot{width:8px;height:8px}
+/* ===== PDF PREVIEW MODAL ===== */
+.pdf-modal{position:fixed;inset:0;z-index:1300;display:flex;flex-direction:column;background:#e5e7eb;animation:fadeIn .25s var(--ease)}
+.pdf-toolbar{display:flex;align-items:center;gap:10px;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));background:var(--g3);backdrop-filter:blur(24px) saturate(1.9);-webkit-backdrop-filter:blur(24px) saturate(1.9);border-bottom:1px solid var(--border);flex-shrink:0;box-shadow:0 4px 20px -8px rgba(15,23,42,.2)}
+.pdf-toolbar .pdf-title{flex:1;text-align:center;font-weight:800;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 8px;min-width:0}
+.pdf-toolbar .btn{flex-shrink:0}
+.pdf-frame-wrap{flex:1;overflow:hidden;position:relative;background:#fff}
+.pdf-frame-wrap iframe{width:100%;height:100%;border:0;background:#fff;display:block}
+[data-theme="dark"] .pdf-modal{background:#0a0d14}
+[data-theme="dark"] .pdf-frame-wrap{background:#1e2739}
+@media (max-width:640px){
+  .pdf-toolbar{padding:10px 10px;padding-top:calc(10px + env(safe-area-inset-top,0px));gap:6px}
+  .pdf-toolbar .pdf-title{font-size:12px;padding:0 4px}
+  .pdf-toolbar .btn{height:34px;padding:0 10px;font-size:12px;gap:5px}
+  .pdf-toolbar .btn .lbl{display:none}
+  .pdf-toolbar .btn svg{width:15px;height:15px}
+}
 </style>
 </head>
 <body>
@@ -790,7 +806,6 @@ var PWA = (function(){
   return { init: init };
 })();
 
-/* ===== STORAGE + MIGRATION ===== */
 var K_DB = 'alus_db_v1';
 var K_SES = 'alus_ses_v1';
 var K_PREF = 'alus_pref_v1';
@@ -798,10 +813,8 @@ var K_ROUTE = 'alus_route_v1';
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 function ymd() { var d = new Date(); return '' + d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2); }
-
 function emptyDB() { return { users: [], warehouses: [], products: [], stocks: [], transfers: [], adjustments: [] }; }
 
-/* Auto-migrate warehouses: ensure required types exist + rename old paint */
 function migrateDB(d) {
   var changed = false;
   if (!d.adjustments) { d.adjustments = []; changed = true; }
@@ -810,30 +823,17 @@ function migrateDB(d) {
   if (!d.products) { d.products = []; changed = true; }
   if (!d.stocks) { d.stocks = []; changed = true; }
   if (!d.transfers) { d.transfers = []; changed = true; }
-
-  // products: ensure components array
   for (var i = 0; i < d.products.length; i++) {
     if (!d.products[i].components) { d.products[i].components = []; changed = true; }
   }
-
-  // warehouses: rename paint → paint_in
   for (var j = 0; j < d.warehouses.length; j++) {
     var w = d.warehouses[j];
-    if (w.type === 'paint') {
-      w.type = 'paint_in';
-      if (!w.name || w.name === 'رنگ‌کاری') w.name = 'رنگ‌کاری داخلی';
-      changed = true;
-    }
+    if (w.type === 'paint') { w.type = 'paint_in'; if (!w.name || w.name === 'رنگ‌کاری') w.name = 'رنگ‌کاری داخلی'; changed = true; }
   }
-
-  // ensure required warehouses exist
   function ensure(type, name, order) {
     var found = false;
     for (var k = 0; k < d.warehouses.length; k++) if (d.warehouses[k].type === type) { found = true; break; }
-    if (!found) {
-      d.warehouses.push({ id: uid(), name: name, type: type, isActive: true, order: order || 0 });
-      changed = true;
-    }
+    if (!found) { d.warehouses.push({ id: uid(), name: name, type: type, isActive: true, order: order || 0 }); changed = true; }
   }
   ensure('central', 'انبار مرکزی', 1);
   ensure('paint_in', 'رنگ‌کاری داخلی', 2);
@@ -844,7 +844,6 @@ function migrateDB(d) {
   ensure('showroom_alus', 'نمایشگاه الوس', 7);
   ensure('sold', 'کالای فروش‌رفته', 8);
   ensure('customer', 'مشتری', 9);
-
   return changed;
 }
 
@@ -882,14 +881,12 @@ function seed() {
   var showA = { id: uid(), name: 'نمایشگاه الوس', type: 'showroom_alus', isActive: true };
   var sold = { id: uid(), name: 'کالای فروش‌رفته', type: 'sold', isActive: true };
   var customer = { id: uid(), name: 'مشتری', type: 'customer', isActive: true };
-
   var users = [
     { id: uid(), name: 'راهبر سیستم', username: 'admin', password: 'admin', role: 'admin', isActive: true },
     { id: uid(), name: 'مدیر', username: 'manager', password: 'manager', role: 'manager', isActive: true },
     { id: uid(), name: 'حسابدار', username: 'acc', password: 'acc', role: 'accountant', isActive: true },
     { id: uid(), name: 'انباردار', username: 'wh', password: 'wh', role: 'warehouse_officer', isActive: true }
   ];
-
   var p1 = { id: uid(), name: 'مبل مدل A', code: 'MB-A', unit: 'دست', components: [
     { id: uid(), name: 'مبل سه نفره', qty: 1 }, { id: uid(), name: 'مبل یک نفره', qty: 2 }, { id: uid(), name: 'میز جلو مبلی', qty: 1 }
   ], createdAt: new Date().toISOString() };
@@ -897,16 +894,13 @@ function seed() {
     { id: uid(), name: 'مبل سه نفره', qty: 1 }, { id: uid(), name: 'مبل یک نفره', qty: 4 }, { id: uid(), name: 'میز جلو مبلی', qty: 1 }, { id: uid(), name: 'صندلی', qty: 2 }
   ], createdAt: new Date().toISOString() };
   var p3 = { id: uid(), name: 'مبل مدل C', code: 'MB-C', unit: 'عدد', components: [], createdAt: new Date().toISOString() };
-
   var now = new Date().toISOString();
   function st(pid, wid, q) { return { id: uid(), productId: pid, warehouseId: wid, quantity: q, reservedQty: 0, updatedAt: now }; }
-
   var stocks = [
     st(p1.id, central.id, 20), st(p1.id, paintIn.id, 12), st(p1.id, uph.id, 8), st(p1.id, showK.id, 3), st(p1.id, showA.id, 2),
     st(p2.id, central.id, 15), st(p2.id, paintOut.id, 6), st(p2.id, uph.id, 4), st(p2.id, store.id, 3), st(p2.id, sold.id, 1),
     st(p3.id, central.id, 30), st(p3.id, uph.id, 10), st(p3.id, store.id, 2)
   ];
-
   var transfers = [];
   for (var i = 0; i < 4; i++) {
     var d = new Date(); d.setDate(d.getDate() - Math.floor(Math.random() * 7));
@@ -927,7 +921,6 @@ function seed() {
     if (status === 'approved') { t.managerApproval = { userId: users[1].id, userName: users[1].name, at: d.toISOString(), note: '' }; t.completedAt = d.toISOString(); }
     transfers.push(t);
   }
-
   var inb1 = {
     id: uid(), code: 'IN-' + ymd() + '-001', type: 'inbound',
     supplierName: 'چوب و مصنوعات پارس', invoiceNumber: 'INV-9841',
@@ -938,7 +931,6 @@ function seed() {
     createdAt: new Date(Date.now() - 3600000).toISOString()
   };
   transfers.unshift(inb1);
-
   return {
     warehouses: [central, paintIn, paintOut, uph, store, showK, showA, sold, customer],
     users: users, products: [p1, p2, p3], stocks: stocks, transfers: transfers, adjustments: []
@@ -997,26 +989,16 @@ var IN_STATUS = {
 };
 function stOf(t) { return t.type === 'inbound' ? IN_STATUS[t.status] : STATUS[t.status]; }
 var WH_COLOR = {
-  central: '#007AFF',
-  paint_in: '#FF9500',
-  paint_out: '#EA580C',
-  upholstery: '#5AC8FA',
-  store: '#34C759',
-  showroom_khalij: '#AF52DE',
-  showroom_alus: '#9333EA',
-  sold: '#FF3B30',
-  customer: '#94a3b8'
+  central: '#007AFF', paint_in: '#FF9500', paint_out: '#EA580C',
+  upholstery: '#5AC8FA', store: '#34C759',
+  showroom_khalij: '#AF52DE', showroom_alus: '#9333EA',
+  sold: '#FF3B30', customer: '#94a3b8'
 };
 var WH_TYPE_LABEL = {
-  central: 'انبار مرکزی',
-  paint_in: 'رنگ‌کاری داخلی',
-  paint_out: 'رنگ‌کاری بیرون',
-  upholstery: 'رویه‌کوبی',
-  store: 'فروشگاه',
-  showroom_khalij: 'نمایشگاه خلیج فارس',
-  showroom_alus: 'نمایشگاه الوس',
-  sold: 'کالای فروش‌رفته',
-  customer: 'مشتری'
+  central: 'انبار مرکزی', paint_in: 'رنگ‌کاری داخلی', paint_out: 'رنگ‌کاری بیرون',
+  upholstery: 'رویه‌کوبی', store: 'فروشگاه',
+  showroom_khalij: 'نمایشگاه خلیج فارس', showroom_alus: 'نمایشگاه الوس',
+  sold: 'کالای فروش‌رفته', customer: 'مشتری'
 };
 
 function canCreate(u) { return u && ['warehouse_officer', 'admin', 'manager'].indexOf(u.role) >= 0; }
@@ -1799,7 +1781,6 @@ function pageStock(page) {
   draw();
 }
 
-/* ===== STOCK INIT ===== */
 function pageStockInit(page) {
   var db = loadDB();
   var stockable = db.warehouses.filter(function(w) { return w.type !== 'customer'; });
@@ -2391,23 +2372,91 @@ function exportExcel(filename, title, headers, rows) {
   html += '</tbody></table></body></html>';
   downloadBlob(new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel;charset=utf-8' }), filename + '.xls');
 }
+
+/* PDF content builder */
+function buildPdfHtml(title, subtitle, headers, rows, autoPrint) {
+  var html = '<!DOCTYPE html><html dir="rtl" lang="fa"><head><meta charset="UTF-8"><title>' + title + '</title>';
+  html += '<style>body{font-family:Tahoma,"Vazirmatn",sans-serif;padding:20px;color:#1e293b;margin:0}h1{font-size:20px;margin:0 0 6px;color:#007AFF}h2{font-size:12px;font-weight:500;color:#64748b;margin:0 0 18px}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #cbd5e1;padding:6px 8px;text-align:right;vertical-align:middle}th{background:#eef2f9;font-weight:bold;color:#334155}tr:nth-child(even) td{background:#f8fafc}.empty{padding:40px;text-align:center;color:#94a3b8}@media print{@page{size:A4 landscape;margin:10mm}body{padding:0}h1{font-size:16px}}</style>';
+  html += '</head><body>';
+  html += '<h1>' + esc(title) + '</h1>';
+  html += '<h2>' + esc(subtitle || '') + ' — تاریخ: ' + faDate(new Date().toISOString()) + '</h2>';
+  if (!rows || !rows.length) {
+    html += '<div class="empty">موردی برای نمایش نیست</div>';
+  } else {
+    html += '<table><thead><tr>' + headers.map(function(h) { return '<th>' + esc(h) + '</th>'; }).join('') + '</tr></thead><tbody>';
+    rows.forEach(function(r) { html += '<tr>' + r.map(function(c) { return '<td>' + esc(c == null ? '' : String(c)) + '</td>'; }).join('') + '</tr>'; });
+    html += '</tbody></table>';
+  }
+  if (autoPrint) html += '<scr' + 'ipt>setTimeout(function(){try{window.focus();window.print();}catch(e){}},500);</scr' + 'ipt>';
+  html += '</body></html>';
+  return html;
+}
+
+/* PDF preview modal with close/print/new-tab */
 function exportPDF(title, subtitle, headers, rows) {
   try {
-    var w = window.open('', '_blank');
-    if (!w) { celebrate('پاپ‌آپ بسته شده', 'لطفاً اجازه پاپ‌آپ بدهید', 'warn', 2200); return; }
-    var html = '<!DOCTYPE html><html dir="rtl" lang="fa"><head><meta charset="UTF-8"><title>' + title + '</title>';
-    html += '<style>body{font-family:Tahoma,"Vazirmatn",sans-serif;padding:20px;color:#1e293b}h1{font-size:20px;margin:0 0 6px;color:#007AFF}h2{font-size:12px;font-weight:500;color:#64748b;margin:0 0 18px}table{width:100%;border-collapse:collapse;font-size:11px}th,td{border:1px solid #cbd5e1;padding:6px 8px;text-align:right}th{background:#eef2f9;font-weight:bold;color:#334155}tr:nth-child(even) td{background:#f8fafc}.badge{display:inline-block;padding:2px 8px;border-radius:100px;background:#eef2f9;font-size:10px}@media print{@page{size:A4 landscape;margin:10mm}body{padding:0}}</style>';
-    html += '</head><body>';
-    html += '<h1>' + title + '</h1>';
-    html += '<h2>' + (subtitle || '') + ' — تاریخ: ' + faDate(new Date().toISOString()) + '</h2>';
-    html += '<table><thead><tr>' + headers.map(function(h) { return '<th>' + h + '</th>'; }).join('') + '</tr></thead><tbody>';
-    rows.forEach(function(r) { html += '<tr>' + r.map(function(c) { return '<td>' + (c == null ? '' : String(c)) + '</td>'; }).join('') + '</tr>'; });
-    html += '</tbody></table>';
-    html += '<scr' + 'ipt>setTimeout(function(){window.print()},400);</scr' + 'ipt>';
-    html += '</body></html>';
-    w.document.write(html);
-    w.document.close();
-  } catch(e) { celebrate('خطا در تولید PDF', e.message || '', 'error', 2000); }
+    var old = document.querySelector('.pdf-modal');
+    if (old) old.remove();
+
+    var inlineHtml = buildPdfHtml(title, subtitle, headers, rows, false);
+    var printableHtml = buildPdfHtml(title, subtitle, headers, rows, true);
+
+    var m = document.createElement('div');
+    m.className = 'pdf-modal';
+    m.innerHTML =
+      '<div class="pdf-toolbar">' +
+        '<button type="button" class="btn ghost sm" id="pdf-close" title="بستن">' + IC.chevR + ' <span class="lbl">بستن</span></button>' +
+        '<div class="pdf-title">' + esc(title) + '</div>' +
+        '<button type="button" class="btn ghost sm" id="pdf-newwin" title="باز در تب جدید">' + IC.file + ' <span class="lbl">تب جدید</span></button>' +
+        '<button type="button" class="btn primary sm" id="pdf-print" title="چاپ">' + IC.print + ' <span class="lbl">چاپ</span></button>' +
+      '</div>' +
+      '<div class="pdf-frame-wrap"><iframe id="pdf-frame" sandbox="allow-same-origin allow-modals allow-popups allow-scripts"></iframe></div>';
+
+    document.body.appendChild(m);
+
+    var frame = m.querySelector('#pdf-frame');
+
+    try {
+      frame.srcdoc = inlineHtml;
+    } catch(e) {
+      try { frame.contentDocument.open(); frame.contentDocument.write(inlineHtml); frame.contentDocument.close(); } catch(e2) {}
+    }
+
+    function closePdf() { try { m.remove(); } catch(e) {} }
+
+    m.querySelector('#pdf-close').addEventListener('click', closePdf);
+
+    m.querySelector('#pdf-print').addEventListener('click', function() {
+      try {
+        var win = frame.contentWindow;
+        if (!win) throw new Error('iframe در دسترس نیست');
+        win.focus();
+        win.print();
+      } catch(e) {
+        try {
+          var w = window.open('', '_blank');
+          if (!w) { celebrate('پاپ‌آپ مسدود است', 'از «تب جدید» استفاده کنید', 'warn', 2200); return; }
+          w.document.open(); w.document.write(printableHtml); w.document.close();
+        } catch(err) {
+          celebrate('خطا در چاپ', err.message || 'از «تب جدید» استفاده کنید', 'error', 2200);
+        }
+      }
+    });
+
+    m.querySelector('#pdf-newwin').addEventListener('click', function() {
+      try {
+        var w = window.open('', '_blank');
+        if (!w) { celebrate('پاپ‌آپ مسدود شده', 'لطفاً اجازه پاپ‌آپ بدهید', 'warn', 2200); return; }
+        w.document.open(); w.document.write(printableHtml); w.document.close();
+      } catch(e) {
+        celebrate('خطا', e.message || '', 'error', 2000);
+      }
+    });
+
+    attachRippleAll(m);
+  } catch(e) {
+    celebrate('خطا در تولید PDF', e.message || '', 'error', 2200);
+  }
 }
 
 /* ===== REPORTS PAGE ===== */
@@ -2452,10 +2501,7 @@ function pageReports(page) {
     }).map(function(s) {
       var p = getProd(db, s.productId); var w = getWh(db, s.warehouseId);
       if (!p || !w) return null;
-      return {
-        product: p, warehouse: w, stock: s,
-        avail: s.quantity - (s.reservedQty || 0)
-      };
+      return { product: p, warehouse: w, stock: s, avail: s.quantity - (s.reservedQty || 0) };
     }).filter(Boolean);
     rows.sort(function(a, b) {
       if (a.warehouse.name !== b.warehouse.name) return a.warehouse.name.localeCompare(b.warehouse.name, 'fa');
@@ -2505,9 +2551,7 @@ function pageReports(page) {
       var p = getProd(db, t.productId);
       var src = getWh(db, t.sourceWarehouseId); var dst = getWh(db, t.destinationWarehouseId);
       var st = stOf(t);
-      return {
-        t: t, p: p, src: src, dst: dst, st: st
-      };
+      return { t: t, p: p, src: src, dst: dst, st: st };
     });
 
     var filtersHTML = '<div class="rep-filters">' +
@@ -2787,6 +2831,7 @@ document.addEventListener('keydown', function(e) {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openCmd(); }
   if (e.key === 'Escape') {
     closeCmd(); closeDrawer(); closeNotif(); closeSheet(); hideKitPop();
+    var pdfM = document.querySelector('.pdf-modal'); if (pdfM) pdfM.remove();
     var m = document.querySelector('.modal-bd'); if (m) m.remove();
     var um = document.querySelector('.userm'); if (um) um.remove();
     $$('.celebrate').forEach(function(el) { el.remove(); });
